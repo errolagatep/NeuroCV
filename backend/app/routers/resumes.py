@@ -29,6 +29,7 @@ def create_resume(body: ResumeCreate, current_user: dict = Depends(get_current_u
         "user_id": current_user["id"],
         "title": body.title,
         "target_job_title": body.target_job_title,
+        "template": body.template,
     }
     result = supabase.table("resumes").insert(resume_data).execute()
     if not result.data:

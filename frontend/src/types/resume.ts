@@ -1,4 +1,5 @@
 export type SectionType = 'contact' | 'summary' | 'experience' | 'education' | 'skills' | 'projects'
+export type TemplateId = 'classic' | 'modern' | 'executive' | 'compact' | 'elegant'
 
 export interface ResumeSection {
   id: string
@@ -16,6 +17,7 @@ export interface Resume {
   title: string
   target_job_title?: string
   job_description?: string
+  template?: TemplateId
   created_at?: string
   updated_at?: string
 }

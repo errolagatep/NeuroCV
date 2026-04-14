@@ -1,5 +1,5 @@
 import { apiClient } from './client'
-import type { Resume, ResumeWithSections } from '../types/resume'
+import type { Resume, ResumeWithSections, TemplateId } from '../types/resume'
 
 export async function getResumes(): Promise<Resume[]> {
   const { data } = await apiClient.get('/resumes')
@@ -11,7 +11,7 @@ export async function getResume(id: string): Promise<ResumeWithSections> {
   return data
 }
 
-export async function createResume(payload: { title: string; target_job_title?: string }): Promise<Resume> {
+export async function createResume(payload: { title: string; target_job_title?: string; template: TemplateId }): Promise<Resume> {
   const { data } = await apiClient.post('/resumes', payload)
   return data
 }

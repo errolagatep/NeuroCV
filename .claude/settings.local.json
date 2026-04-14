@@ -8,7 +8,8 @@
       "Bash(./node_modules/.bin/tailwindcss init:*)",
       "Bash(npm run:*)",
       "WebSearch",
-      "Bash(py --version)"
+      "Bash(py --version)",
+      "Bash(find 'C:\\\\Users\\\\Errol Ace Agatep\\\\Documents\\\\AI Projects\\\\AI Based Resume Builder\\\\frontend\\\\src' -name *.tsx)"
     ]
   }
 }

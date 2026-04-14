@@ -11,6 +11,7 @@ router = APIRouter()
 
 class ExportRequest(BaseModel):
     resume_id: str
+    template: str | None = None
 
 
 def _get_resume_and_sections(resume_id: str, user_id: str):
@@ -38,6 +39,8 @@ def _get_resume_and_sections(resume_id: str, user_id: str):
 @router.post("/pdf")
 def export_pdf(body: ExportRequest, current_user: dict = Depends(get_current_user)):
     resume, sections = _get_resume_and_sections(body.resume_id, current_user["id"])
+    if body.template:
+        resume = {**resume, "template": body.template}
     pdf_bytes = export_service.generate_pdf(resume, sections)
     filename = f"{resume.get('title', 'resume').replace(' ', '_')}.pdf"
     return StreamingResponse(
@@ -50,6 +53,8 @@ def export_pdf(body: ExportRequest, current_user: dict = Depends(get_current_use
 @router.post("/docx")
 def export_docx(body: ExportRequest, current_user: dict = Depends(get_current_user)):
     resume, sections = _get_resume_and_sections(body.resume_id, current_user["id"])
+    if body.template:
+        resume = {**resume, "template": body.template}
     docx_bytes = export_service.generate_docx(resume, sections)
     filename = f"{resume.get('title', 'resume').replace(' ', '_')}.docx"
     return StreamingResponse(

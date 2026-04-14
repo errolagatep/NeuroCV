@@ -65,7 +65,7 @@ export function EditorPage() {
           </div>
           <div className="flex items-center gap-2">
             <UploadResumeButton />
-            <ExportMenu resumeId={resume.id} />
+            <ExportMenu resumeId={resume.id} currentTemplate={resume.template ?? 'modern'} />
           </div>
         </div>
 

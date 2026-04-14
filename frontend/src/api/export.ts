@@ -1,9 +1,10 @@
 import { apiClient } from './client'
+import type { TemplateId } from '../types/resume'
 
-export async function exportResume(resumeId: string, format: 'pdf' | 'docx'): Promise<void> {
+export async function exportResume(resumeId: string, format: 'pdf' | 'docx', template?: TemplateId): Promise<void> {
   const response = await apiClient.post(
     `/export/${format}`,
-    { resume_id: resumeId },
+    { resume_id: resumeId, ...(template ? { template } : {}) },
     { responseType: 'blob' }
   )
   const url = URL.createObjectURL(response.data)

@@ -1,46 +1,30 @@
 import { useState } from 'react'
 import { Download } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { exportResume } from '../../api/export'
-import { toast } from '../ui/Toast'
+import { ExportModal } from './ExportModal'
+import type { TemplateId } from '../../types/resume'
 
-interface Props { resumeId: string }
+interface Props {
+  resumeId: string
+  currentTemplate: TemplateId
+}
 
-export function ExportMenu({ resumeId }: Props) {
-  const [loading, setLoading] = useState<'pdf' | 'docx' | null>(null)
-
-  const handleExport = async (format: 'pdf' | 'docx') => {
-    setLoading(format)
-    try {
-      await exportResume(resumeId, format)
-      toast('success', `Downloaded ${format.toUpperCase()}`)
-    } catch {
-      toast('error', `Failed to export ${format.toUpperCase()}`)
-    } finally {
-      setLoading(null)
-    }
-  }
+export function ExportMenu({ resumeId, currentTemplate }: Props) {
+  const [open, setOpen] = useState(false)
 
   return (
-    <div className="flex items-center gap-2">
-      <Button
-        variant="secondary"
-        size="sm"
-        loading={loading === 'pdf'}
-        onClick={() => handleExport('pdf')}
-      >
+    <>
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
         <Download className="h-4 w-4" />
-        PDF
+        Export
       </Button>
-      <Button
-        variant="secondary"
-        size="sm"
-        loading={loading === 'docx'}
-        onClick={() => handleExport('docx')}
-      >
-        <Download className="h-4 w-4" />
-        Word
-      </Button>
-    </div>
+
+      <ExportModal
+        open={open}
+        onClose={() => setOpen(false)}
+        resumeId={resumeId}
+        currentTemplate={currentTemplate}
+      />
+    </>
   )
 }
