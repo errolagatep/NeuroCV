@@ -5,6 +5,7 @@ class Settings(BaseSettings):
     SUPABASE_URL: str
     SUPABASE_SERVICE_KEY: str
     ANTHROPIC_API_KEY: str
+    ALLOWED_ORIGINS: str = "http://localhost:5173"
 
     class Config:
         env_file = ".env"
